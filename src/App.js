@@ -92,143 +92,143 @@ function App() {
   
   return (
     <div className="App">
-      <div className="grid">
-        {
-          shuffledArray.map((x, j) => {
-            if (pieces.indexOf(x) !== -1) {
-              let i = pieces.indexOf(x);
-              return (
-                <Card component={Image} 
-                  onClick={() => {
-                    console.log(piecesToUnreveal.length);
-                  }}
-                  key={j}
-                  componentProps={{src: pieces[i], className: "revealed-image"}} 
-                  isRevealed={revealedStates[i]} 
-                  setRevealed={(x) => {
-                    if (matched[i]) {
-                      console.log("matched!");
-                      return;
-                    }
-                    else if (revealedStates[i]) {
-                      console.log("revealed!");
-                      return;
-                    }
-                    else if (piecesToUnreveal.length === 1) {
-                      if (checkMatch(i)) {
-                        console.log("match!");
-                        let matchedStates = matched;
-                        matchedStates[i] = true;
-                        setMatched(matchedStates);
-                        
+      <div className="center">
+        <div className="grid">
+          {
+            shuffledArray.map((x, j) => {
+              if (pieces.indexOf(x) !== -1) {
+                let i = pieces.indexOf(x);
+                return (
+                  <Card component={Image} 
+                    onClick={() => {
+                      console.log(piecesToUnreveal.length);
+                    }}
+                    key={j}
+                    componentProps={{src: pieces[i], className: "revealed-image"}} 
+                    isRevealed={revealedStates[i]} 
+                    setRevealed={(x) => {
+                      if (matched[i]) {
+                        console.log("matched!");
+                        return;
+                      }
+                      else if (revealedStates[i]) {
+                        console.log("revealed!");
+                        return;
+                      }
+                      else if (piecesToUnreveal.length === 1) {
+                        if (checkMatch(i)) {
+                          console.log("match!");
+                          let matchedStates = matched;
+                          matchedStates[i] = true;
+                          setMatched(matchedStates);
+                          
+                          let states = revealedStates;
+                          states[i] = true;
+                          setRevealedStates(states);
+                          setPiecesToUnreveal([]);
+                          return;
+                        }
+                        else {
+                          console.log("wrong match, revealing and waiting...");
+                          let states = revealedStates;
+                          states[i] = x;
+                          setRevealedStates(states);
+
+                          rerender();
+
+                          setPiecesToUnreveal([...piecesToUnreveal, i]);
+                          return;
+                        }
+                      }
+                      else if (piecesToUnreveal.length === 2) {
                         let states = revealedStates;
-                        states[i] = true;
+                        states[piecesToUnreveal[0]] = false;
+                        states[piecesToUnreveal[1]] = false;
+
+                        states[i] = x;
+                        setPiecesToUnreveal([i]);
                         setRevealedStates(states);
-                        setPiecesToUnreveal([]);
                         return;
                       }
                       else {
-                        console.log("wrong match, revealing and waiting...");
                         let states = revealedStates;
                         states[i] = x;
                         setRevealedStates(states);
-
-                        rerender();
-
-                        setPiecesToUnreveal([...piecesToUnreveal, i]);
-                        return;
+                        setPiecesToUnreveal([i]);
                       }
                     }
-                    else if (piecesToUnreveal.length === 2) {
-                      let states = revealedStates;
-                      states[piecesToUnreveal[0]] = false;
-                      states[piecesToUnreveal[1]] = false;
+                  }/>
+                ); 
+              }
+              else {
+                let i = pieces.length + names.indexOf(x);
+                
+                return (
+                  <Card component={Div} 
+                    onClick={() => {
+                      console.log(piecesToUnreveal.length);
+                    }}
+                    key={j}
+                    componentProps={{text: names[names.indexOf(x)], className: "card-text"}} 
+                    isRevealed={revealedStates[i]} 
+                    setRevealed={(x) => {
+                      if (matched[i]) {
+                        console.log("matched");
+                        return;
+                      }
+                      else if (revealedStates[i]) {
+                        console.log("revealed!");
+                        return;
+                      }
+                      else if (piecesToUnreveal.length === 1) {
+                        if (checkMatch(i)) {
+                          console.log("match!");
+                          let matchedStates = matched;
+                          matchedStates[i] = true;
+                          setMatched(matchedStates);
+                          
+                          let states = revealedStates;
+                          states[i] = true;
+                          setRevealedStates(states);
+                          setPiecesToUnreveal([]);
+                          return;
+                        }
+                        else {
+                          console.log("wrong match, revealing and waiting...");
+                          let states = revealedStates;
+                          states[i] = x;
+                          setRevealedStates(states);
 
-                      states[i] = x;
-                      setPiecesToUnreveal([i]);
-                      setRevealedStates(states);
-                      return;
-                    }
-                    else {
-                      let states = revealedStates;
-                      states[i] = x;
-                      setRevealedStates(states);
-                      setPiecesToUnreveal([i]);
-                    }
-                  }
-                }/>
-              ); 
-            }
-            else {
-              let i = pieces.length + names.indexOf(x);
-              
-              return (
-                <Card component={Div} 
-                  onClick={() => {
-                    console.log(piecesToUnreveal.length);
-                  }}
-                  key={j}
-                  componentProps={{text: names[names.indexOf(x)], className: "card-text"}} 
-                  isRevealed={revealedStates[i]} 
-                  setRevealed={(x) => {
-                    if (matched[i]) {
-                      console.log("matched");
-                      return;
-                    }
-                    else if (revealedStates[i]) {
-                      console.log("revealed!");
-                      return;
-                    }
-                    else if (piecesToUnreveal.length === 1) {
-                      if (checkMatch(i)) {
-                        console.log("match!");
-                        let matchedStates = matched;
-                        matchedStates[i] = true;
-                        setMatched(matchedStates);
-                        
+                          rerender();
+
+                          setPiecesToUnreveal([...piecesToUnreveal, i]);
+                          return;
+                        }
+                      }
+                      else if (piecesToUnreveal.length === 2) {
                         let states = revealedStates;
-                        states[i] = true;
+                        states[piecesToUnreveal[0]] = false;
+                        states[piecesToUnreveal[1]] = false;
+
+                        states[i] = x;
+                        setPiecesToUnreveal([i]);
                         setRevealedStates(states);
-                        setPiecesToUnreveal([]);
                         return;
                       }
                       else {
-                        console.log("wrong match, revealing and waiting...");
                         let states = revealedStates;
                         states[i] = x;
                         setRevealedStates(states);
-
-                        rerender();
-
-                        setPiecesToUnreveal([...piecesToUnreveal, i]);
-                        return;
+                        setPiecesToUnreveal([i]);
                       }
                     }
-                    else if (piecesToUnreveal.length === 2) {
-                      let states = revealedStates;
-                      states[piecesToUnreveal[0]] = false;
-                      states[piecesToUnreveal[1]] = false;
-
-                      states[i] = x;
-                      setPiecesToUnreveal([i]);
-                      setRevealedStates(states);
-                      return;
-                    }
-                    else {
-                      let states = revealedStates;
-                      states[i] = x;
-                      setRevealedStates(states);
-                      setPiecesToUnreveal([i]);
-                    }
-                  }
-                }/>
-              ); 
-            }
-          })
-        }
-        
+                  }/>
+                ); 
+              }
+            })
+          }
+        </div>
       </div>
-
       <h1>Vytvoril: Ivan Hrabčák</h1><br/>
       <a href="https://github.com/ivanhrabcak/pexeso">Kód tu</a>
     </div>
