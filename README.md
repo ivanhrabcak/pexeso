@@ -5,4 +5,4 @@ This code was written in a day, so it is very bad.
 - `yarn`
 - `yarn start`
 
-[Hosted here](https://pexeso.hrabcak.eu)
+[Hosted here](https://ivan.hrabcak.eu/pexeso)
