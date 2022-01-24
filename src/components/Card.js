@@ -1,11 +1,9 @@
-import { useState } from "react";
-
-const Card = ({ component, componentProps, isRevealed, setRevealed, onClick }) => {
+const Card = ({ component, componentProps, isRevealed, toggleRevealed }) => {
     const Component = component;
 
-    if (isRevealed) {
+    if (isRevealed()) {
         return (
-            <div className="card revealed-image" onClick={onClick}>
+            <div className="card revealed-image card-text" onClick={() => toggleRevealed()}>
                 <Component {...componentProps} />
             </div>
         );
@@ -13,9 +11,8 @@ const Card = ({ component, componentProps, isRevealed, setRevealed, onClick }) =
     else {
         return (
             <div className="card" onClick={() => { 
-                setRevealed(true); 
-                onClick();
-            } }>
+                toggleRevealed(); 
+            }}>
                 ?
             </div>
         );
